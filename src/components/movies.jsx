@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import MoviesTable from "./moviesTable";
 import ListGroup from "./common/listGroup";
 import Pagination from "./common/pagination";
@@ -70,7 +71,13 @@ class Movies extends Component {
 
   render() {
     const { length: count } = this.state.movies;
-    const { pageSize, currentPage, sortColumn } = this.state;
+    const {
+      pageSize,
+      currentPage,
+      sortColumn,
+      genres,
+      selectedGenre
+    } = this.state;
 
     if (count === 0) return <p>There are no movies in database.</p>;
 
@@ -80,12 +87,19 @@ class Movies extends Component {
       <div className="row">
         <div className="col-3">
           <ListGroup
-            items={this.state.genres}
-            selectedItem={this.state.selectedGenre}
+            items={genres}
+            selectedItem={selectedGenre}
             onItemSelect={this.handleGenreSelect}
           />
         </div>
         <div className="col">
+          <Link
+            to="/movies/new"
+            className="btn btn-primary"
+            style={{ marginBottom: 20 }}
+          >
+            New Movie
+          </Link>
           <p>Showing {totalCount} movies in database.</p>
           <MoviesTable
             movies={movies}
